@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -25,7 +27,28 @@ public class Account {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
+    @JsonIgnore
     private Customer customer;
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Account() {
+    }
+
+    public Account(Long id, String accountNumber, BigDecimal currentBalance, BigDecimal openingBalance, BigDecimal closingBalance, Customer customer) {
+        this.id = id;
+        this.accountNumber = accountNumber;
+        this.currentBalance = currentBalance;
+        this.openingBalance = openingBalance;
+        this.closingBalance = closingBalance;
+        this.customer = customer;
+    }
 
     public Long getId() {
         return id;
@@ -33,17 +56,6 @@ public class Account {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Account() {
-    }
-
-    public Account(Long id, String accountNumber, BigDecimal currentBalance, BigDecimal openingBalance, BigDecimal closingBalance) {
-        this.id = id;
-        this.accountNumber = accountNumber;
-        this.currentBalance = currentBalance;
-        this.openingBalance = openingBalance;
-        this.closingBalance = closingBalance;
     }
 
     public String getAccountNumber() {

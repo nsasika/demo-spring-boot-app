@@ -1,5 +1,6 @@
 package com.example.demo.resources;
 
+import com.example.demo.domain.Account;
 import com.example.demo.domain.Customer;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.services.CustomerService;
@@ -35,4 +36,8 @@ public class CustomerResource {
         return ResponseEntity.ok().body(customer);
     }
 
+    @PostMapping("/customers/{customerId}/accounts")
+    public Optional<Account> addAccount(@PathVariable(value = "customerId") Long customerId, @RequestBody Account account) throws ResourceNotFoundException {
+        return customerService.addAccount(customerId,account);
+    }
 }
