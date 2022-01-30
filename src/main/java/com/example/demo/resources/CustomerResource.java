@@ -1,10 +1,13 @@
 package com.example.demo.resources;
 
 import com.example.demo.domain.Customer;
+import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.services.CustomerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -25,4 +28,11 @@ public class CustomerResource {
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();
     }
+
+    @GetMapping("/customers/{id}")
+    public ResponseEntity<Optional<Customer>> getCustomerById(@PathVariable(value = "id") long customerId) throws ResourceNotFoundException {
+        Optional<Customer> customer = Optional.ofNullable(customerService.getCustomerById(customerId).orElseThrow(() -> new ResourceNotFoundException("")));
+        return ResponseEntity.ok().body(customer);
+    }
+
 }
