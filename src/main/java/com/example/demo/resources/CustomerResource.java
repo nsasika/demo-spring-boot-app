@@ -4,8 +4,10 @@ import com.example.demo.domain.Customer;
 import com.example.demo.services.CustomerService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/customers")
+@RequestMapping("/api/v1")
 public class CustomerResource {
 
     private final CustomerService customerService;
@@ -14,13 +16,13 @@ public class CustomerResource {
         this.customerService = customerService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/customers")
     public Customer addCustomer(@RequestBody Customer customer){
         return customerService.addCustomer(customer);
     }
 
-    @GetMapping("/list")
-    public String getCustomers(){
-        return "getCustomer";
+    @GetMapping("/customers")
+    public List<Customer> getAllCustomers(){
+        return customerService.getAllCustomers();
     }
 }
