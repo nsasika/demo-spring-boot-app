@@ -1,25 +1,27 @@
 package com.example.demo.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
-//mark class as an Entity
 @Entity
-//defining class name as Table name
 @Table(name = "customers")
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(name = "first_name", nullable = false)
     private String firstName;
-    @Column
+
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Account> accounts;
 
     public Customer() {}
 
