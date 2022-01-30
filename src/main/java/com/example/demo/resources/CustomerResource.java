@@ -20,18 +20,18 @@ public class CustomerResource {
     }
 
     @PostMapping("/customers")
-    public Customer addCustomer(@RequestBody Customer customer){
+    public Customer addCustomer(@RequestBody Customer customer) {
         return customerService.addCustomer(customer);
     }
 
     @GetMapping("/customers")
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
     @GetMapping("/customers/{id}")
     public ResponseEntity<Optional<Customer>> getCustomerById(@PathVariable(value = "id") long customerId) throws ResourceNotFoundException {
-        Optional<Customer> customer = Optional.ofNullable(customerService.getCustomerById(customerId).orElseThrow(() -> new ResourceNotFoundException("")));
+        Optional<Customer> customer = customerService.getCustomerById(customerId);
         return ResponseEntity.ok().body(customer);
     }
 

@@ -5,7 +5,6 @@ import com.example.demo.exceptions.AuthException;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.services.CustomerService;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +31,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Optional<Customer> getCustomerById(Long customerId) throws ResourceNotFoundException {
-        return customerRepository.findById(customerId);
+        return Optional.ofNullable(customerRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Could not find Customer id::"+ customerId)));
     }
 }
