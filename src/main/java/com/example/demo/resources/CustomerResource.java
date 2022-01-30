@@ -1,20 +1,22 @@
 package com.example.demo.resources;
 
+import com.example.demo.domain.Customer;
+import com.example.demo.services.CustomerService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerResource {
 
-    @PostMapping("/add")
-    public String registerUser(@RequestBody Map<String, Object> userMap){
-    String firstName = (String) userMap.get("firstName");
-    String lastName = (String) userMap.get("lastName");
-    String email = (String) userMap.get("email");
+    private final CustomerService customerService;
 
-    return firstName+ " "+ lastName+ " "+email;
+    public CustomerResource(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @PostMapping("/add")
+    public Customer addCustomer(@RequestBody Customer customer){
+        return customerService.addCustomer(customer);
     }
 
     @GetMapping("/list")
