@@ -1,0 +1,68 @@
+version: '3.9'
+services:
+  # mysql-workbench:
+  #   image: ghcr.io/linuxserver/mysql-workbench
+  #   container_name: mysql-workbench
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #   volumes:
+  #     - workbech:/var/lib/workbech
+  #   ports:
+  #     - 3010:3000
+  #   cap_add:
+  #     - IPC_LOCK
+  #   restart: unless-stopped
+
+  # mysql-db:
+  #   image: mysql:5.7
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: 'growloop'
+  #     # So you don't have to use root, but you can if you like
+  #     MYSQL_USER: 'user'
+  #     # You can use whatever password you like
+  #     MYSQL_PASSWORD: 'password'
+  #     # Password for root access
+  #     MYSQL_ROOT_PASSWORD: 'password'
+  #   ports:
+  #     # <Port exposed> : < MySQL Port running inside container>
+  #     - '3306:3306'
+  #   expose:
+  #     # Opens port 3306 on the container
+  #     - '3306'
+  #     # Where our data will be persisted
+  #   volumes:
+  #     - my-db:/var/lib/mysql
+
+  postgres:
+    container_name: postgres_container
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres2:/data/postgres
+    ports:
+      - '5435:5432'
+    restart: unless-stopped
+
+  # pgadmin:
+  #   container_name: pgadmin_container
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #     PGADMIN_CONFIG_SERVER_MODE: 'False'
+  #   volumes:
+  #     - pgadmin2:/var/lib/pgadmin
+
+  #   ports:
+  #     - '${PGADMIN_PORT:-5050}:80'
+  #   restart: unless-stopped
+volumes:
+  my-db: {}
+  postgres2:
+  pgadmin2:
