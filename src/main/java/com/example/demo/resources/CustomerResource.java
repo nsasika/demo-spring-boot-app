@@ -4,7 +4,6 @@ import com.example.demo.domain.Account;
 import com.example.demo.domain.Customer;
 import com.example.demo.exceptions.ResourceNotFoundException;
 import com.example.demo.services.CustomerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +30,12 @@ public class CustomerResource {
     }
 
     @GetMapping("/customers/{id}")
-    public ResponseEntity<Optional<Customer>> getCustomerById(@PathVariable(value = "id") long customerId) throws ResourceNotFoundException {
+    public Optional<Customer> getCustomerById(@PathVariable(value = "id") long customerId) throws ResourceNotFoundException {
         Optional<Customer> customer = customerService.getCustomerById(customerId);
-        return ResponseEntity.ok().body(customer);
+        return customer.map(customer1 -> {
+            customer1.setAccounts(customer1.getAccounts());
+            return customer1;
+        });
     }
 
     @PostMapping("/customers/{customerId}/accounts")

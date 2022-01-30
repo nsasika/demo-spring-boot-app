@@ -23,13 +23,28 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Account> accounts;
 
-    public Customer() {}
+    public Customer() {
 
-    public Customer(Long id, String firstName, String lastName, String email) {
+    }
+
+    public Set<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Customer(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public Customer(Long id, String firstName, String lastName, String email, Set<Account> accounts) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.accounts = accounts;
     }
 
     public Long getId() {
